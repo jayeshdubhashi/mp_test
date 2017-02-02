@@ -2,12 +2,16 @@ import multiprocessing
 
 def worker(num):
     """thread worker function"""
-    print 'Worker:', num
+    name = multiprocessing.current_process().name
+    print name
     return
 
-if __name__ == '__main__':
+def main():
     jobs = []
-    for i in range(5):
-        p = multiprocessing.Process(target=worker, args=(i,))
-        jobs.append(p)
+    for i in range(50):
+        p = multiprocessing.Process(target=worker,args=(i,))
+        jobs.append(i)
         p.start()
+        p.join()
+if __name__ == '__main__':
+    main()
